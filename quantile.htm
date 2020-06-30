@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+
+  <title>Svelte Quantile Chart</title>
+
+  <link rel='stylesheet' href='./css/global.css'>
+  <link rel='stylesheet' href='./css/quantile.css'>
+
+  <style>
+    #chart {
+      width: 30vw;
+      padding-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Quantile Chart</h1>
+  <button onclick="random()">Random quantile</button> <!-- <button onclick="newbreaks()">New Breaks</button> -->
+  <div id="chart"></div>
+  <script src='./js/quantile.js'></script>
+  <script>
+    let count = 0;
+    let breaks = [
+      [0, 5, 10, 20, 50, 85]
+    ];
+
+    let chart = new quantile({
+      target: document.getElementById('chart'),
+      props: {
+        breaks: breaks[0],
+        value: null
+      }
+    });
+
+    function random() {
+      chart.value =  Math.random() * breaks[count][breaks[count].length - 1];
+    }
+
+//    function newbreaks() {
+//      count += 1;
+//      let i = count % breaks.length;
+//      chart.value = null;
+//      chart.breaks = breaks[i];
+//    }
+  </script>
+</body>
+
+</html>

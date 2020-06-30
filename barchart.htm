@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+
+  <title>Svelte Bar Chart</title>
+
+  <link rel='stylesheet' href='./css/global.css'>
+  <link rel='stylesheet' href='./css/barchart.css'>
+
+  <style>
+    .chart {
+      display: inline-block;
+      width: 25vw;
+      height: 200px;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Bar Chart</h1>
+  <button onclick="makeChart()">Click to add chart</button>
+  <div id="charts"></div>
+  <script src='./js/barchart.js'></script>
+  <script>
+    var charts = {};
+    const div = document.getElementById('charts');
+
+    const labels = ['label 1', 'label 2', 'label 3', 'label 4'];
+    const colors = ['rgb(0, 33, 104)', 'rgb(0, 97, 180)', 'rgb(24, 158, 212)', 'rgb(159, 201, 238)', 'rgb(210, 233, 254)'];
+
+    let count = 0;
+
+    function makeChart() {
+      let col = count % colors.length;
+      let el = document.createElement('div');
+      el.id = count;
+      el.className = 'chart';
+
+      div.append(el);
+
+      charts[toString(count)] = new barchart({
+        target: document.getElementById(count),
+        props: {
+          data: [
+            { label: labels[0], value: random() },
+            { label: labels[1], value: random() },
+            { label: labels[2], value: random() },
+            { label: labels[3], value: random() }
+          ],
+          layout: {
+            fill: colors[col],
+            unit: '',
+            decimals: 0
+          }
+        }
+      });
+
+      count += 1;
+    }
+
+    function random() {
+      return Math.floor(Math.random() * 10) + 1;
+    }
+  </script>
+</body>
+
+</html>
