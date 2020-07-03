@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+
+  <title>Svelte Bar Chart</title>
+
+  <link rel='stylesheet' href='../css/global.css'>
+  <link rel='stylesheet' href='../css/quantile.css'>
+
+  <style>
+    #chart {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="chart"></div>
+  <script src='../js/quantile.js'></script>
+  <script>
+    function makeChart() {
+      let query = getQuery();
+      let props = {};
+      if (query.data.breaks) {
+        props.breaks = query.data.breaks;
+      }
+      props.value = query.data.value ? query.data.value : null;
+
+      console.log(props);
+      let chart = new quantile({
+        target: document.getElementById('chart'),
+        props: props
+      });
+    }
+
+    function getQuery() {
+      let url = location.search;
+      if (url === "") {
+        return {};
+      } else {
+        var query = url.substr(1);
+        var result = {};
+        query.split("&").forEach(function (part) {
+          var item = part.split(/=(.+)/);
+          result[item[0]] = JSON.parse(atob(item[1]));
+        });
+        console.log(JSON.stringify(result));
+        return result;
+      }
+    }
+
+    makeChart();
+  </script>
+</body>
+
+</html>
